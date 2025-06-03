@@ -8,6 +8,10 @@ on:
 env:
   IMAGE_NAME: flexi-portal
 
+permissions:
+  id-token: write 
+  contents: read 
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -21,7 +25,8 @@ jobs:
       with:
         client-id: ${{ secrets.AZURE_CLIENT_ID }}
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: c69b36ac-dd24-451a-85e2-45cb75a29c38  # from az account show
+        subscription-id: c69b36ac-dd24-451a-85e2-45cb75a29c38
+        auth-type: oidc 
 
     - name: ACR Login
       run: az acr login --name ${{ secrets.ACR_NAME }}
